@@ -1,4 +1,6 @@
 use std::fmt;
+use strum::IntoEnumIterator;
+use strum_macros::EnumIter;
 
 pub struct Card {
     pub suit: Suit,
@@ -19,7 +21,7 @@ impl fmt::Display for Card {
     }
 }
 
-#[derive(Debug)]
+#[derive(EnumIter, Debug, PartialEq, Clone)]
 #[allow(unused_variables, dead_code)]
 pub enum Suit {
     Hearts, 
@@ -27,7 +29,7 @@ pub enum Suit {
     Clovers, 
     Pikes
 }
-#[derive(Debug)]
+#[derive(EnumIter, Debug, PartialEq, Clone)]
 #[allow(unused_variables, dead_code)]
 pub enum Rank {
     Ace, Two, Three, Four, Five, Six, Seven, 
