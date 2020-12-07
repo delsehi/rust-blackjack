@@ -1,10 +1,7 @@
 use rand::thread_rng;
 use super::*;
 use strum::IntoEnumIterator;
-use strum_macros::EnumIter;
-use rand::Rng;
-
-
+use rand::seq::SliceRandom;
 
 pub struct Deck {
     cards: Vec<Card>, 
@@ -29,8 +26,8 @@ impl Deck {
     pub fn get_card_at(&self, index: usize) -> &Card {
         &self.cards[index]
     }
-    pub fn shuffle(&self) {
+    pub fn shuffle(&mut self) {
         let mut rng = thread_rng();
-        rng.shuffle(&self.cards.collect());
+        &self.cards.shuffle(&mut rng);
     }
 }
