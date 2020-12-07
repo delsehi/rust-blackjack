@@ -1,3 +1,5 @@
+use std::fmt;
+
 pub struct Card {
     pub suit: Suit,
     pub rank: Rank,
@@ -10,10 +12,13 @@ impl Card {
             rank,
         }
     }
-    pub fn print(&self) {
-        println!("I am {:?} of {:?}", &self.rank, &self.suit)
+}
+impl fmt::Display for Card {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?} of {:?}", &self.rank, &self.suit)
     }
 }
+
 #[derive(Debug)]
 #[allow(unused_variables, dead_code)]
 pub enum Suit {
@@ -25,7 +30,7 @@ pub enum Suit {
 #[derive(Debug)]
 #[allow(unused_variables, dead_code)]
 pub enum Rank {
-    Ace(u8), Two(u8), Three(u8), Four(u8), Five(u8), Six(u8), Seven(u8), 
-    Eight(u8), Nine(u8), Ten(u8), Knight(u8), Queen(u8), King(u8)
+    Ace, Two, Three, Four, Five, Six, Seven, 
+    Eight, Nine, Ten, Knight, Queen, King
 }
 
