@@ -23,15 +23,21 @@ pub fn get_score(player: &mut Player) -> u8 {
             card::Rank::Knight => result += 10,
             card::Rank::Queen => result += 10,
             card::Rank::King => result += 10,
-            card::Rank::Ace => {
-                if result + 10 > 21 {
-                    result += 1
-                } else {
-                    result += 11
-                }
+            _ => {
             }
         }
-        
+    }
+    for card in hand.iter() {
+        match &card.rank {
+            card::Rank::Ace => {
+                if result + 11 > 21 {
+                    result += 1;
+                } else {
+                    result += 11;
+                }
+            },
+            _ => {}
+        }
     }
     result
 }
