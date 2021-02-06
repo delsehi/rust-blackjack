@@ -20,7 +20,7 @@ fn main() {
         println!("Player has: {}", card)
     }
 
-    while game::get_score(&mut player) < 21 {
+    while game::get_score(&mut player) < 17 {
         let card = deck.get_card();
         println!("Dealing card {}", card);
         player.deal_card(card)
