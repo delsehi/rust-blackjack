@@ -23,8 +23,20 @@ impl Deck {
             cards
         }
     }
-    pub fn get_card_at(&self, index: usize) -> &Card {
-        &self.cards[index]
+    pub fn get_clone_from(&self, index: usize) -> Option<Card> {
+        if self.cards.get(index).is_none() {
+            None
+        } else {
+            Some(self.cards[index].clone())
+        }
+        
+    }
+    pub fn get_card(&mut self) -> Card {
+        let card = self.cards.pop();
+        match card {
+            None => panic!("Not enough cards in deck."),
+            Some(card) => card
+        }
     }
     pub fn shuffle(&mut self) {
         let mut rng = thread_rng();

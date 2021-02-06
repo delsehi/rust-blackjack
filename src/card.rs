@@ -1,7 +1,7 @@
 use std::fmt;
-use strum::IntoEnumIterator;
 use strum_macros::EnumIter;
 
+#[derive(Clone)]
 pub struct Card {
     pub suit: Suit,
     pub rank: Rank,
