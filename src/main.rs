@@ -16,11 +16,14 @@ fn main() {
 
     game::deal_players(&mut deck, &mut dealer, &mut player);
 
-    for _num in 0..5 {
-     //   player.deal_card(deck.get_card())
-    }
     for card in player.get_hand().iter() {
-        println!("Card: {}", card)
+        println!("Player has: {}", card)
+    }
+
+    while game::get_score(&mut player) < 21 {
+        let card = deck.get_card();
+        println!("Dealing card {}", card);
+        player.deal_card(card)
     }
 
     println!("Score: {}", game::get_score(&mut player))
