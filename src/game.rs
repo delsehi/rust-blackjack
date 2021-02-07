@@ -45,6 +45,7 @@ pub fn get_score(player: &Player) -> u8 {
 pub fn get_winner<'a>(dealer: &'a Player, player: &'a Player ) -> Option<&'a Player>{
     let player_score = get_score(&player);
     let dealer_score = get_score(&dealer);
+
     if player_score > 21 && dealer_score > 21 {return None}; // Both are busted
     if player_score > 21 {return Some(dealer)}; // Player busted
     if dealer_score > 21 {return Some(player)}; // Dealer busted
