@@ -1,5 +1,6 @@
-# Card game in Rust 
+# Black Jack in Rust
 
-This is a simple project for learning the basic syntax of Rust. 
+This is a simple implementation of the card game Black Jack that you can play in the terminal. 
 
-Will not be interesting for anybody else :) 
+It's only intended as a small personal project for learning the basics of Rust syntax. 
+
