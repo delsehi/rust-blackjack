@@ -42,6 +42,15 @@ pub fn get_score(player: &Player) -> u8 {
     result
 }
 
+pub fn get_winner<'a>(dealer: &'a Player, player: &'a Player ) -> Option<&'a Player>{
+    let player_score = get_score(&player);
+    let dealer_score = get_score(&dealer);
+    if player_score > 21 && dealer_score > 21 {return None}; // Both are busted
+    if player_score > 21 {return Some(dealer)}; // Player busted
+    if dealer_score > 21 {return Some(player)}; // Dealer busted
+    if dealer_score >= player_score {return Some(dealer)} else {return Some(player)}; // Highest wins. Dealer wins on equal.
+}
+
 #[test]
 fn queen_and_ace_is21() {
     let mut player = Player::new("Test");

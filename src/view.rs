@@ -27,3 +27,7 @@ pub fn player_wants_to_hit() -> bool {
     }
 
 }
+
+pub fn announce_winner(name: &str, score: u8) {
+    println!("The winner is: {} with a score of {}!", name, score);
+}

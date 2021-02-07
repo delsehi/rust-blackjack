@@ -22,10 +22,11 @@ fn main() {
     view::display_playerhand(&dealer.name, dealer.get_hand(), game::get_score(&dealer)); 
     view::display_playerhand(&player.name, player.get_hand(), game::get_score(&player)); 
 
-    while view::player_wants_to_hit() {
+    while game::get_score(&player) < 22 && view::player_wants_to_hit() {
         let card = deck.get_card();
-        println!("Dealing card {} to {}.", card, dealer.name);
-        dealer.deal_card(card)
+        println!("Dealing card {} to {}.", card, player.name);
+        player.deal_card(card);
+        view::display_playerhand(&player.name, player.get_hand(), game::get_score(&player)); 
     }
 
     while game::get_score(&dealer) < 17 {
@@ -34,5 +35,12 @@ fn main() {
         dealer.deal_card(card)
     }
 
-    println!("Score: {}", game::get_score(&dealer))
+    println!("Score: {}", game::get_score(&dealer));
+
+    let winner = game::get_winner(&dealer, &player);
+    match winner {
+        Some(winner) => view::announce_winner(&winner.name, game::get_score(&winner)),
+        None => println!("It's a tie!")
+    }
+    
 }
