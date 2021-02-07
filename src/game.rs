@@ -44,23 +44,31 @@ pub fn get_score(player: &mut Player) -> u8 {
 
 #[test]
 fn queen_and_ace_is21() {
-    let mut player = Player::new();
+    let mut player = Player::new("Test");
     player.deal_card(Card::new(card::Suit::Clovers, card::Rank::Ace));
     player.deal_card(Card::new(card::Suit::Clovers, card::Rank::Queen));
     assert_eq!(21, get_score(&mut player));
 }
 #[test]
 fn seven_and_ace_is18() {
-    let mut player = Player::new();
+    let mut player = Player::new("Test");
     player.deal_card(Card::new(card::Suit::Clovers, card::Rank::Seven));
     player.deal_card(Card::new(card::Suit::Hearts, card::Rank::Ace));
     assert_eq!(18, get_score(&mut player));
 }
 #[test]
 fn seven_ace_and_knight_is18() {
-    let mut player = Player::new();
+    let mut player = Player::new("Test");
     player.deal_card(Card::new(card::Suit::Clovers, card::Rank::Seven));
     player.deal_card(Card::new(card::Suit::Hearts, card::Rank::Ace));
     player.deal_card(Card::new(card::Suit::Tiles, card::Rank::Knight));
     assert_eq!(18, get_score(&mut player));
+}
+#[test]
+fn  five_aces_is15() {
+    let mut player = Player::new("Test");
+    for _num in 0..5 {
+        player.deal_card(Card::new(card::Suit::Hearts, card::Rank::Ace));
+    }
+    assert_eq!(15, get_score(&mut player));
 }

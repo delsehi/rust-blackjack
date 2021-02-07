@@ -1,12 +1,14 @@
 use super::*;
 
 pub struct Player {
+    pub name: String,
     hand: Vec<Card>,
 }
 
 impl Player {
-    pub fn new() -> Self {
+    pub fn new(name: &str) -> Self {
         Self {
+            name: String::from(name),
             hand: Vec::<Card>::new(),
         }
     }

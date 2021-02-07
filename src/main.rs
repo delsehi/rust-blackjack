@@ -3,22 +3,23 @@ mod card;
 mod deck;
 mod player;
 mod game;
+mod view;
 use card::*;
 use deck::*;
 use player::*;
 
 
 fn main() {
+
     let mut deck = Deck::new();
     deck.shuffle();
-    let mut player = Player::new();
-    let mut dealer = Player::new();
+    let mut player = Player::new("Player 1");
+    let mut dealer = Player::new("Dealer");
 
     game::deal_players(&mut deck, &mut dealer, &mut player);
 
-    for card in player.get_hand().iter() {
-        println!("Player has: {}", card)
-    }
+    let score = game::get_score(&mut player);
+    view::display_playerhand(&player.name, player.get_hand(), score);
 
     while game::get_score(&mut player) < 17 {
         let card = deck.get_card();
