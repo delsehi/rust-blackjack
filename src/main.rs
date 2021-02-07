@@ -18,8 +18,7 @@ fn main() {
 
     game::deal_players(&mut deck, &mut dealer, &mut player);
 
-    let score = game::get_score(&mut player);
-    view::display_playerhand(&player.name, player.get_hand(), score);
+    view::display_playerhand(&player.name, player.get_hand(), game::get_score(&player));
 
     while game::get_score(&mut player) < 17 {
         let card = deck.get_card();

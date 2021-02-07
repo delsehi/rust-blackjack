@@ -6,7 +6,7 @@ pub fn deal_players(deck: &mut Deck, dealer: &mut Player, player: &mut Player) {
     player.deal_card(deck.get_card());
 }
 
-pub fn get_score(player: &mut Player) -> u8 {
+pub fn get_score(player: &Player) -> u8 {
     let hand = &player.get_hand();
     let mut result: u8 = 0;
     for card in hand.iter() {
