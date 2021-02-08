@@ -1,4 +1,5 @@
 use super::*;
+use card::*;
 use std::fmt;
 
 pub fn deal_players(deck: &mut Deck, dealer: &mut Player, player: &mut Player) {
@@ -11,25 +12,25 @@ pub fn get_score(player: &Player) -> Score {
     let hand = &player.get_hand();
     let mut result: u8 = 0;
     for card in hand.iter() {
-        match &card.rank {
-            card::Rank::Two => result += 2,
-            card::Rank::Three => result += 3,
-            card::Rank::Four => result += 4,
-            card::Rank::Five => result += 5,
-            card::Rank::Six => result += 6,
-            card::Rank::Seven => result += 7,
-            card::Rank::Eight => result += 8,
-            card::Rank::Nine => result += 9,
-            card::Rank::Ten => result += 10,
-            card::Rank::Knight => result += 10,
-            card::Rank::Queen => result += 10,
-            card::Rank::King => result += 10,
+        match card.rank {
+            Rank::Two => result += 2,
+            Rank::Three => result += 3,
+            Rank::Four => result += 4,
+            Rank::Five => result += 5,
+            Rank::Six => result += 6,
+            Rank::Seven => result += 7,
+            Rank::Eight => result += 8,
+            Rank::Nine => result += 9,
+            Rank::Ten => result += 10,
+            Rank::Knight => result += 10,
+            Rank::Queen => result += 10,
+            Rank::King => result += 10,
             _ => {}
         }
     }
     for card in hand.iter() {
         match &card.rank {
-            card::Rank::Ace => {
+            Rank::Ace => {
                 if result + 11 > 21 {
                     result += 1;
                 } else {
@@ -85,30 +86,30 @@ pub fn get_winner<'a>(dealer: &'a Player, player: &'a Player) -> Option<&'a Play
 #[test]
 fn queen_and_ace_is_blackjack() {
     let mut player = Player::new("Test");
-    player.deal_card(Card::new(card::Suit::Clovers, card::Rank::Ace));
-    player.deal_card(Card::new(card::Suit::Clovers, card::Rank::Queen));
+    player.deal_card(Card::new(card::Suit::Clovers, Rank::Ace));
+    player.deal_card(Card::new(card::Suit::Clovers, Rank::Queen));
     assert_eq!(Score::Blackjack, get_score(&mut player));
 }
 #[test]
 fn seven_and_ace_is18() {
     let mut player = Player::new("Test");
-    player.deal_card(Card::new(card::Suit::Clovers, card::Rank::Seven));
-    player.deal_card(Card::new(card::Suit::Hearts, card::Rank::Ace));
+    player.deal_card(Card::new(card::Suit::Clovers, Rank::Seven));
+    player.deal_card(Card::new(card::Suit::Hearts, Rank::Ace));
     assert_eq!(Score::Points(18), get_score(&mut player));
 }
 #[test]
 fn seven_ace_and_knight_is18() {
     let mut player = Player::new("Test");
-    player.deal_card(Card::new(card::Suit::Clovers, card::Rank::Seven));
-    player.deal_card(Card::new(card::Suit::Hearts, card::Rank::Ace));
-    player.deal_card(Card::new(card::Suit::Tiles, card::Rank::Knight));
+    player.deal_card(Card::new(card::Suit::Clovers, Rank::Seven));
+    player.deal_card(Card::new(card::Suit::Hearts, Rank::Ace));
+    player.deal_card(Card::new(card::Suit::Tiles, Rank::Knight));
     assert_eq!(Score::Points(18), get_score(&mut player));
 }
 #[test]
 fn five_aces_is15() {
     let mut player = Player::new("Test");
     for _num in 0..5 {
-        player.deal_card(Card::new(card::Suit::Hearts, card::Rank::Ace));
+        player.deal_card(Card::new(card::Suit::Hearts, Rank::Ace));
     }
     assert_eq!(Score::Points(15), get_score(&mut player));
 }
@@ -117,12 +118,12 @@ fn five_aces_is15() {
 fn blackjack_wins_over_21() {
     let mut player = Player::new("Test");
     let mut dealer = Player::new("Test2");
-    player.deal_card(Card::new(card::Suit::Hearts, card::Rank::Ace));
-    player.deal_card(Card::new(card::Suit::Hearts, card::Rank::Ten));
+    player.deal_card(Card::new(card::Suit::Hearts, Rank::Ace));
+    player.deal_card(Card::new(card::Suit::Hearts, Rank::Ten));
 
-    dealer.deal_card(Card::new(card::Suit::Hearts, card::Rank::Ten));
-    dealer.deal_card(Card::new(card::Suit::Hearts, card::Rank::Ten));
-    dealer.deal_card(Card::new(card::Suit::Hearts, card::Rank::Ace));
+    dealer.deal_card(Card::new(card::Suit::Hearts, Rank::Ten));
+    dealer.deal_card(Card::new(card::Suit::Hearts, Rank::Ten));
+    dealer.deal_card(Card::new(card::Suit::Hearts, Rank::Ace));
     let winner = game::get_winner(&dealer, &player).unwrap();
     assert_eq!(player.name, winner.name);
 }

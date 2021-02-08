@@ -33,6 +33,6 @@ pub enum Suit {
 #[allow(unused_variables, dead_code)]
 pub enum Rank { // Todo: Refactor so Two = 2, etc and in game use 'Two as u8' instead of that match statement. 
     Ace, Two, Three, Four, Five, Six, Seven, 
-    Eight, Nine, Ten, Knight, Queen, King
+    Eight, Nine, Ten = 10, Knight, Queen, King
 }
 

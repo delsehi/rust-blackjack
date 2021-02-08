@@ -1,5 +1,6 @@
 use super::*;
 use std::io;
+use std::{thread, time};
 
 pub fn get_input(prompt: &str) -> String {
     println!("{}", prompt);

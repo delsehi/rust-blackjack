@@ -7,7 +7,6 @@ mod view;
 use card::*;
 use deck::*;
 use player::*;
-use std::{thread, time};
 use game::Score;
 
 fn main() {
