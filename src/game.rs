@@ -39,7 +39,12 @@ pub fn get_score(player: &Player) -> Score {
             _ => {}
         }
     }
-    if result > 21 {return Score::Busted}
+    if result > 21 {
+        return Score::Busted;
+    }
+    if result == 21 && hand.len() == 2 {
+        return Score::Blackjack
+    }
     Score::Points(result)
 }
 
@@ -56,43 +61,33 @@ impl fmt::Display for Score {
             Score::Blackjack => write!(f, "{:?}", &self),
             Score::Busted => write!(f, "{:?}", &self),
             Score::Points(num) => write!(f, "{}", num),
-        
         }
     }
 }
 
 pub fn get_winner<'a>(dealer: &'a Player, player: &'a Player) -> Option<&'a Player> {
-    let player_score = get_score(&player); // Get their scores. 
+    let player_score = get_score(&player); // Get their scores.
     let dealer_score = get_score(&dealer);
-    if player_score == dealer_score {return None};
-    if player_score > dealer_score {return Some(player)} else {
-        return Some(dealer)
-    }
-/*
-    // If the player has blackjack and the dealer has not 
-    if player_score == Score::Blackjack && dealer_score != Score::Blackjack {
-        return Some(player); // Player wins. 
-    } else if dealer_score == Score::Blackjack && player_score != Score::Blackjack {
-        return Some(dealer); // Or dealer if they have blackjack but the player has not.
-    }
-    if player_score == Score::Busted && dealer_score == Score::Busted {
-        return None;
-    }; // Both are busted
-    
-    if dealer_score >= player_score {
-        return Some(dealer);
-    } else {
+    if player_score == dealer_score { // If they have the same score but not blackjack
+        if dealer_score > Score::Points(16) && dealer_score != Score::Blackjack { 
+            return Some(dealer); // The dealer wins from 17 and up
+        } else {
+            return None;
+        }
+    };
+    if player_score > dealer_score { // Otherwise player with the highest score wins. 
         return Some(player);
-    }; // Highest wins. Dealer wins on equal. 
-    */
+    } else {
+        return Some(dealer);
+    }
 }
 
 #[test]
-fn queen_and_ace_is21() {
+fn queen_and_ace_is_blackjack() {
     let mut player = Player::new("Test");
     player.deal_card(Card::new(card::Suit::Clovers, card::Rank::Ace));
     player.deal_card(Card::new(card::Suit::Clovers, card::Rank::Queen));
-    assert_eq!(Score::Points(21), get_score(&mut player));
+    assert_eq!(Score::Blackjack, get_score(&mut player));
 }
 #[test]
 fn seven_and_ace_is18() {
