@@ -82,3 +82,16 @@ fn  five_aces_is15() {
     }
     assert_eq!(15, get_score(&mut player));
 }
+
+#[test]
+fn  blackjack_wins_over_21() {
+    let mut player = Player::new("Test");
+    let mut dealer = Player::new("Test2");
+    player.deal_card(Card::new(card::Suit::Hearts, card::Rank::Ace));
+    player.deal_card(Card::new(card::Suit::Hearts, card::Rank::Ten));
+    dealer.deal_card(Card::new(card::Suit::Hearts, card::Rank::Ten));
+    dealer.deal_card(Card::new(card::Suit::Hearts, card::Rank::Ten));
+    dealer.deal_card(Card::new(card::Suit::Hearts, card::Rank::Ace));
+    let winner = game::get_winner(&dealer, &player).unwrap();
+    assert_eq!(player.name, winner.name);
+}
