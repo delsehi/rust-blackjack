@@ -8,6 +8,7 @@ use card::*;
 use deck::*;
 use player::*;
 use std::{thread, time};
+use game::Score;
 
 fn main() {
     loop {
@@ -26,7 +27,7 @@ fn main() {
 
 
         // The player chooses if they want more cards. 
-        while game::get_score(&player) < 22 && view::player_wants_to_hit() {
+        while game::get_score(&player) < game::Score::Points(22) && view::player_wants_to_hit() {
             let card = deck.get_card();
             view::announce_dealing(&card, &player.name);
             player.deal_card(card);
@@ -34,10 +35,12 @@ fn main() {
             view::display_playerhand(&player.name, player.get_hand(), game::get_score(&player));
         }
         // Dealer's turn.
-        while game::get_score(&dealer) < 17 {
+        let mut dealer_score = game::get_score(&dealer);
+        while dealer_score < Score::Points(17) && dealer_score != Score::Busted {
             let card = deck.get_card();
             view::announce_dealing(&card, &dealer.name);
-            dealer.deal_card(card)
+            dealer.deal_card(card);
+            dealer_score = game::get_score(&dealer);
         }
         view::display_playerhand(&dealer.name, dealer.get_hand(), game::get_score(&dealer));
         view::display_playerhand(&player.name, player.get_hand(), game::get_score(&player));

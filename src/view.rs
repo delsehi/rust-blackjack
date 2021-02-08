@@ -11,7 +11,7 @@ pub fn get_input(prompt: &str) -> String {
     input
 }
 
-pub fn display_playerhand(player: &str, hand: &Vec<Card>, score: u8) {
+pub fn display_playerhand(player: &str, hand: &Vec<Card>, score: game::Score) {
     println!("{} \n=============", player);
     for card in hand.iter() {
         println!("{}", card)
@@ -32,7 +32,7 @@ pub fn player_wants_to_hit() -> bool {
     }
 }
 
-pub fn announce_winner(name: &str, score: u8) {
+pub fn announce_winner(name: &str, score: game::Score) {
     println!("The winner is....");
     thread::sleep(time::Duration::from_millis(1500));
     println!("{} with a score of {}!\n", name, score);
