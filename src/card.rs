@@ -29,10 +29,10 @@ pub enum Suit {
     Clovers, 
     Pikes
 }
-#[derive(EnumIter, Debug, PartialEq, Clone)]
+#[derive(EnumIter, Debug, PartialEq, Clone, Copy)]
 #[allow(unused_variables, dead_code)]
 pub enum Rank { // Todo: Refactor so Two = 2, etc and in game use 'Two as u8' instead of that match statement. 
-    Ace, Two, Three, Four, Five, Six, Seven, 
-    Eight, Nine, Ten = 10, Knight, Queen, King
+    Ace, Two = 2, Three = 3, Four = 4, Five = 5, Six = 6, Seven = 7, 
+    Eight = 8, Nine = 9, Ten = 10, Knight, Queen, King
 }
 

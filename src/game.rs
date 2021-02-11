@@ -13,19 +13,10 @@ pub fn get_score(player: &Player) -> Score {
     let mut result: u8 = 0;
     for card in hand.iter() {
         match card.rank {
-            Rank::Two => result += 2,
-            Rank::Three => result += 3,
-            Rank::Four => result += 4,
-            Rank::Five => result += 5,
-            Rank::Six => result += 6,
-            Rank::Seven => result += 7,
-            Rank::Eight => result += 8,
-            Rank::Nine => result += 9,
-            Rank::Ten => result += 10,
             Rank::Knight => result += 10,
             Rank::Queen => result += 10,
             Rank::King => result += 10,
-            _ => {}
+            x => result += x as u8,
         }
     }
     for card in hand.iter() {
@@ -126,4 +117,15 @@ fn blackjack_wins_over_21() {
     dealer.deal_card(Card::new(card::Suit::Hearts, Rank::Ace));
     let winner = game::get_winner(&dealer, &player).unwrap();
     assert_eq!(player.name, winner.name);
+}
+
+#[test]
+fn aces_shrink_when_needed() {
+    let mut player = Player::new("Player");
+    player.deal_card(Card::new(card::Suit::Hearts, Rank::Ten));
+    player.deal_card(Card::new(card::Suit::Clovers, Rank::Ace));
+    player.deal_card(Card::new(card::Suit::Tiles, Rank::Ace));
+    let score = game::get_score(&player);
+    assert_eq!(Score::Points(12), score);
+
 }
