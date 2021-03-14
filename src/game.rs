@@ -16,19 +16,15 @@ pub fn get_score(player: &Player) -> Score {
             Rank::Knight => result += 10,
             Rank::Queen => result += 10,
             Rank::King => result += 10,
+            Rank::Ace => result += 1,
             x => result += x as u8,
         }
     }
     for card in hand.iter() {
-        match &card.rank {
-            Rank::Ace => {
-                if result + 11 > 21 {
-                    result += 1;
-                } else {
-                    result += 11;
-                }
+        if let Rank::Ace = card.rank {
+            if result + 10 <= 21 {
+                result += 10;
             }
-            _ => {}
         }
     }
     if result > 21 {
