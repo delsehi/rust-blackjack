@@ -2,13 +2,13 @@ use super::*;
 use card::*;
 use std::fmt;
 
-pub fn deal_players(deck: &mut Deck, dealer: &mut Player, player: &mut Player) {
+pub fn deal_players(deck: &mut Deck, dealer: &mut dyn Person, player: &mut dyn Person) {
     player.deal_card(deck.get_card());
     dealer.deal_card(deck.get_card());
     player.deal_card(deck.get_card());
 }
 
-pub fn get_score(player: &Player) -> Score {
+pub fn get_score(player: & dyn Person) -> Score {
     let hand = &player.get_hand();
     let mut result: u8 = 0;
     for card in hand.iter() {
@@ -53,9 +53,9 @@ impl fmt::Display for Score {
     }
 }
 
-pub fn get_winner<'a>(dealer: &'a Player, player: &'a Player) -> Option<&'a Player> {
-    let player_score = get_score(&player); // Get their scores.
-    let dealer_score = get_score(&dealer);
+pub fn get_winner<'a>(dealer: &'a dyn Person, player: &'a dyn Person) -> Option<&'a dyn Person> {
+    let player_score = get_score(player); // Get their scores.
+    let dealer_score = get_score(dealer);
     if player_score == dealer_score { // If they have the same score but not blackjack
         if dealer_score > Score::Points(16) && dealer_score != Score::Blackjack { 
             return Some(dealer); // The dealer wins from 17 and up
@@ -112,7 +112,7 @@ fn blackjack_wins_over_21() {
     dealer.deal_card(Card::new(card::Suit::Hearts, Rank::Ten));
     dealer.deal_card(Card::new(card::Suit::Hearts, Rank::Ace));
     let winner = game::get_winner(&dealer, &player).unwrap();
-    assert_eq!(player.name, winner.name);
+    assert_eq!(player.get_name(), winner.get_name());
 }
 
 #[test]
