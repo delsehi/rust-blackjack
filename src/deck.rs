@@ -1,12 +1,13 @@
-use rand::thread_rng;
-use super::*;
-use strum::IntoEnumIterator;
+use crate::Card;
+use crate::Rank;
+use crate::Suit;
 use rand::seq::SliceRandom;
+use rand::thread_rng;
+use strum::IntoEnumIterator;
 
 pub struct Deck {
-    cards: Vec<Card>, 
+    cards: Vec<Card>,
 }
-
 impl Deck {
     pub fn add_card(&mut self, c: Card) {
         self.cards.push(c);
@@ -19,16 +20,13 @@ impl Deck {
             }
         }
         cards.push(Card::new(Suit::Clovers, Rank::Ace));
-        Self {
-            cards
-        }
+        Self { cards }
     }
-   
     pub fn get_card(&mut self) -> Card {
         let card = self.cards.pop();
         match card {
             None => panic!("Not enough cards in deck."),
-            Some(card) => card
+            Some(card) => card,
         }
     }
     pub fn shuffle(&mut self) {
