@@ -30,7 +30,7 @@ pub fn get_score(player: & dyn Person) -> Score {
     if result > 21 {
         return Score::Busted;
     }
-    if result == 21 {
+    if result == 21 && hand.len() == 2 {
         return Score::Blackjack
     }
     Score::Points(result)
